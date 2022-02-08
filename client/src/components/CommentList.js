@@ -70,7 +70,7 @@ export default function CommentsList({ postId, postUsername, comments, setCommen
           </div>
         </div>
       ) : (
-        <Message text="There's no comments to show ./" />
+        <Message text="There are no comments to show ./" />
       )}
     </>
   );

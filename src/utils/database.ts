@@ -1,7 +1,5 @@
 import Token from "../database/models/Token";
 import User from "../database/models/User";
-import Post from "../database/models/User";
-import Comment from "../database/models/User";
 
 export const getUserUsername = async (userId: string) => {
   const user = await User.findById(userId);

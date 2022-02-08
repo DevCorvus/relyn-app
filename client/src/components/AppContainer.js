@@ -34,7 +34,7 @@ export default function Container({ children }) {
 
   return (
     <div className="min-h-screen bg-purple-200 px-2 lg:px-4 py-1 lg:py-2">
-      <div className="my-3 grid grid-cols-12 gap-8">
+      <div className="my-3 mx-auto container grid grid-cols-12 gap-8">
         <div className={`${showDashboardOnMobile && "hidden"} col-span-12 lg:col-span-8`}>
           <div className="bg-white rounded-lg p-4">
             {children}

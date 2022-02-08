@@ -53,7 +53,7 @@ export default function PostList({ showForm, queriesInitialState = queryInitialS
       </div>
       <div className="flex flex-col gap-4">
         {(!isLoading && posts.length === 0) ? (
-          <Message text="There's no posts to show ./" />
+          <Message text="There are no posts to show ./" />
         ) : (
           <>
           {posts.map((post, i) => {

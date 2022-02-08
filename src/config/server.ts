@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cookieSession from "cookie-session";
 import envConfig, { NODE_ENV, PORT, SESSION_COOKIES_SECRET, SIGNED_COOKIES_SECRET } from "../utils/env";
+import { redirectOverHttps } from "../middlewares/redirectOverHTTPS";
 import errors from "../controllers/error.controller";
 import indexRoutes from "../routes/index";
 import authRoutes from "../routes/auth";
@@ -23,7 +24,13 @@ app.use(helmet({
     }
   }
 }));
-app.enable("trust proxy");
+if (NODE_ENV === "production") {
+  app.enable("trust proxy");
+  app.use(redirectOverHttps);
+} else {
+  app.use(morgan("dev"));
+}
+app.use(express.json());
 app.use(cookieParser(SIGNED_COOKIES_SECRET));
 app.use(cookieSession({
   name: "session",
@@ -32,8 +39,6 @@ app.use(cookieSession({
   httpOnly: true,
   secure: NODE_ENV === "production" ? true : false
 }));
-app.use(express.json());
-app.use(morgan(NODE_ENV === "production" ? "tiny" : "dev"));
 
 // Settings
 app.set("port", PORT);
