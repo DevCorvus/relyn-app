@@ -21,6 +21,7 @@
   "author": "Luis Portillo",
   "license": "MIT",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
@@ -35,7 +36,6 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/cookie-session": "^2.0.43",
     "@types/cors": "^2.8.12",
