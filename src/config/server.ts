@@ -5,7 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cookieSession from "cookie-session";
 import envConfig, { NODE_ENV, PORT, SESSION_COOKIES_SECRET, SIGNED_COOKIES_SECRET } from "../utils/env";
-import { redirectOverHttps } from "../middlewares/redirectOverHTTPS";
+import { redirectOverHttps } from "../middlewares/redirectOverHttps";
 import errors from "../controllers/error.controller";
 import indexRoutes from "../routes/index";
 import authRoutes from "../routes/auth";
