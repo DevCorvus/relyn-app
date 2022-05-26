@@ -1,5 +1,6 @@
 import Token from '../database/models/Token';
 import User from '../database/models/User';
+import { DAY_IN_MS } from './constants';
 
 export const getUserUsername = async (userId: string) => {
   const user = await User.findById(userId);
@@ -24,6 +25,17 @@ export const getUserInfo = async (username: string) => {
   return user;
 };
 
-export const removeExpiredTokens = async () => {
+const removeExpiredTokens = async () => {
   await Token.deleteMany({ expiresAt: { $lt: Date.now() } });
+};
+
+export const expiredTokensCleaner = async () => {
+  try {
+    await removeExpiredTokens();
+    setInterval(async () => {
+      await removeExpiredTokens();
+    }, DAY_IN_MS);
+  } catch (err) {
+    console.error('Failed to remove expired tokens:', err);
+  }
 };
