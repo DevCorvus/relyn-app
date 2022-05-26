@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Post from '../database/models/Post';
-import Comment from '../database/models/Comment';
+import Post from '../models/Post';
+import Comment from '../models/Comment';
 import { paginate } from '../utils/pagination';
 import { getUserUsername } from '../utils/database';
 

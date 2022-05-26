@@ -1,8 +1,5 @@
 import type { Request, Response } from 'express';
-import User, {
-  UserInterface,
-  UserDataInterface,
-} from '../database/models/User';
+import User, { UserInterface, UserDataInterface } from '../models/User';
 import {
   generateTokens,
   deleteRefreshToken,
@@ -43,11 +40,11 @@ export const index = async (req: Request, res: Response) => {
 export const exists = async (req: Request, res: Response) => {
   const { username, email } = req.body as UserSearchInterface;
   if (username) {
-    const usernameExists: boolean = await User.exists({ username });
+    const usernameExists = await User.exists({ username });
     if (usernameExists) return res.status(409).send("Username isn't available");
   }
   if (email) {
-    const emailExists: boolean = await User.exists({ email });
+    const emailExists = await User.exists({ email });
     if (emailExists) return res.status(409).send("Email isn't available");
   }
   res.sendStatus(204);

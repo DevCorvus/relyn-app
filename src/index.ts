@@ -1,15 +1,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import server from './config/server';
-import { databaseConnection } from './database/connection';
+import { initializeServer } from './core/server';
+import { databaseConnection } from './core/database';
 import { expiredTokensCleaner } from './utils/database';
 
 (async () => {
   await databaseConnection();
   await expiredTokensCleaner();
 
+  const server = await initializeServer();
+
   server.listen(server.get('port'), (): void => {
-    console.log(`Server running on port ${server.get('port')}`);
+    console.log('Server running on port', server.get('port'));
   });
 })();

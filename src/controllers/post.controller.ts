@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import val from 'validator';
-import Comment from '../database/models/Comment';
-import Post, { PostInterface } from '../database/models/Post';
+import Comment from '../models/Comment';
+import Post, { PostInterface } from '../models/Post';
 import { paginate, SortByType } from '../utils/pagination';
 import { getUserUsername } from '../utils/database';
 

@@ -1,6 +1,6 @@
 import type { Response } from 'express';
 import jwt from 'jsonwebtoken';
-import Token from '../database/models/Token';
+import Token from '../models/Token';
 import {
   NODE_ENV,
   ACCESS_TOKEN_SECRET,

@@ -9,7 +9,7 @@ import {
   PayloadInterface,
   TokenResponseInterface,
 } from '../utils/token';
-import Token from '../database/models/Token';
+import Token from '../models/Token';
 import {
   NODE_ENV,
   REFRESH_TOKEN_SECRET,
@@ -21,7 +21,7 @@ const refreshToken = async (req: Request, res: Response) => {
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   if (!token) return res.sendStatus(401);
 
-  const refreshTokenExists: boolean = await Token.exists({
+  const refreshTokenExists = await Token.exists({
     refreshToken: token,
   });
   if (!refreshTokenExists) return res.sendStatus(403);

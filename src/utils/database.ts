@@ -1,5 +1,5 @@
-import Token from '../database/models/Token';
-import User from '../database/models/User';
+import Token from '../models/Token';
+import User from '../models/User';
 import { DAY_IN_MS } from './constants';
 
 export const getUserUsername = async (userId: string) => {

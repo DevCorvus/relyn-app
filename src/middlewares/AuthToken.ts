@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import User from '../database/models/User';
-import Token from '../database/models/Token';
+import User from '../models/User';
+import Token from '../models/Token';
 import { PayloadInterface, tokenSlayer } from '../utils/token';
 import { ACCESS_TOKEN_SECRET } from '../utils/env';
 

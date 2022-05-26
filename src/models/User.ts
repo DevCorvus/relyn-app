@@ -26,45 +26,42 @@ export interface UserDataInterface {
   password: string;
 }
 
-const userSchema = new Schema<UserInterface>({
-  avatar: {
-    type: String,
-    required: true,
+const userSchema = new Schema<UserInterface>(
+  {
+    avatar: {
+      type: String,
+      required: true,
+    },
+    nickname: {
+      type: String,
+      required: true,
+    },
+    followers: {
+      type: Number,
+      required: true,
+    },
+    follows: {
+      type: [{ username: String, createdAt: Date }],
+    },
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  nickname: {
-    type: String,
-    required: true,
-  },
-  followers: {
-    type: Number,
-    required: true,
-  },
-  follows: {
-    type: [{ username: String, createdAt: Date }],
-  },
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.encryptPassword = async (
   password: string

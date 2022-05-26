@@ -1,5 +1,5 @@
-import Post from '../database/models/Post';
-import Comment from '../database/models/Comment';
+import Post from '../models/Post';
+import Comment from '../models/Comment';
 
 type PaginationType = 'post' | 'comment';
 export type SortByType = 'latest' | 'oldest' | 'mostLiked' | 'mostCommented';

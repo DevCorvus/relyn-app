@@ -18,11 +18,11 @@ const tokenSchema = new Schema<TokenInterface>({
     required: true,
   },
   createdAt: {
-    type: Date,
+    type: Number,
     required: true,
   },
   expiresAt: {
-    type: Date,
+    type: Number,
     required: true,
   },
 });
