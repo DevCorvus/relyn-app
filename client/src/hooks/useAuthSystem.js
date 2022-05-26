@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 import {
   autoSetAuth,
   refreshTokenExists,
   refreshToken,
   csrfToken,
-} from "../APIs/authAPI";
-import userAPI from "../APIs/userAPI";
+} from '../APIs/authAPI';
+import userAPI from '../APIs/userAPI';
 
 const useAuthSystem = () => {
   autoSetAuth();
@@ -17,12 +17,12 @@ const useAuthSystem = () => {
     (async () => {
       try {
         await csrfToken();
-      } catch(e) {
+      } catch (e) {
         // ...
       }
     })();
     authInterval.current = setInterval(() => {
-      setAuthIterator(prevState => !prevState);
+      setAuthIterator((prevState) => !prevState);
     }, accessTokenExpirationMinusOneSecond);
   }, []);
 
@@ -32,7 +32,7 @@ const useAuthSystem = () => {
         try {
           await refreshToken();
           await userAPI.account();
-        } catch(e) {
+        } catch (e) {
           clearInterval(authInterval.current);
         }
       })();

@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { autoSetAuth } from "../APIs/authAPI";
-import val from "validator";
-import userAPI from "../APIs/userAPI";
-import useValidation from "../hooks/useValidation";
-import Button from "./Button";
-import Label from "./Label";
-import FormInput from "./FormInput"
-import ResponseError from "./errors/ResponseError";
-import Loading from "./loadings/Loading";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { autoSetAuth } from '../APIs/authAPI';
+import val from 'validator';
+import userAPI from '../APIs/userAPI';
+import useValidation from '../hooks/useValidation';
+import Button from './Button';
+import Label from './Label';
+import FormInput from './FormInput';
+import ResponseError from './errors/ResponseError';
+import Loading from './loadings/Loading';
 
 const validationInitialState = {
-  usernameOrEmail: "",
-  password: "",
+  usernameOrEmail: '',
+  password: '',
 };
 
 const dataInitialState = {
-  usernameOrEmail: "",
-  password: "",
-  remember: false
+  usernameOrEmail: '',
+  password: '',
+  remember: false,
 };
 
 export default function LoginForm() {
   const history = useHistory();
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState('');
   const [sending, setSending] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [validation, setValidation] = useState(validationInitialState);
@@ -33,14 +33,17 @@ export default function LoginForm() {
     const name = e.target.name;
     const value = e.target.value;
     setData({ ...data, [name]: value });
-    if (name === "usernameOrEmail") {
+    if (name === 'usernameOrEmail') {
       !val.isLength(value, { min: 4, max: 200 })
-      ? setValidation({ ...validation, usernameOrEmail: "Invalid username or email" })
-      : setValidation({ ...validation, usernameOrEmail: "" });
-    } else if (name === "password") {
+        ? setValidation({
+            ...validation,
+            usernameOrEmail: 'Invalid username or email',
+          })
+        : setValidation({ ...validation, usernameOrEmail: '' });
+    } else if (name === 'password') {
       !val.isLength(value, { min: 8, max: 250 })
-      ? setValidation({ ...validation, password: "Invalid password" })
-      : setValidation({ ...validation, password: "" });
+        ? setValidation({ ...validation, password: 'Invalid password' })
+        : setValidation({ ...validation, password: '' });
     }
   };
 
@@ -53,14 +56,12 @@ export default function LoginForm() {
       setData(dataInitialState);
       await userAPI.login(data);
       autoSetAuth();
-      history.push("/");
-
-    } catch(err) {
+      history.push('/');
+    } catch (err) {
       setResponse(err.response.data);
       setTimeout(() => {
-        setResponse("");
+        setResponse('');
       }, 3000);
-
     } finally {
       setSending(false);
     }
@@ -79,7 +80,9 @@ export default function LoginForm() {
           onChange={handleChange}
           error={validation.usernameOrEmail}
           autoFocus={true}
-        >Username or Email</FormInput>
+        >
+          Username or Email
+        </FormInput>
 
         <FormInput
           label="Password"
@@ -88,7 +91,9 @@ export default function LoginForm() {
           value={data.password}
           onChange={handleChange}
           error={validation.password}
-        >Password</FormInput>
+        >
+          Password
+        </FormInput>
 
         <div className="flex items-center gap-2">
           <input

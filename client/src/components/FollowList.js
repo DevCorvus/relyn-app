@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import FollowItem from "./FollowItem";
-import useUserFollows from "../hooks/useUserFollows";
-import Loading from "./loadings/Loading";
-import Error from "./errors/Error";
+import React, { useState } from 'react';
+import FollowItem from './FollowItem';
+import useUserFollows from '../hooks/useUserFollows';
+import Loading from './loadings/Loading';
+import Error from './errors/Error';
 
 export default function Follows({ follows, setFollows }) {
   const [isLoading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export default function Follows({ follows, setFollows }) {
   return (
     <>
       {isLoading && <Loading />}
-      {follows.map(follow => (
+      {follows.map((follow) => (
         <FollowItem key={follow._id} {...follow} />
       ))}
     </>

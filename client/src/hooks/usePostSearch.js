@@ -1,8 +1,16 @@
-import { useEffect } from "react";
-import postAPI from "../APIs/postAPI";
-import axios from "axios";
+import { useEffect } from 'react';
+import postAPI from '../APIs/postAPI';
+import axios from 'axios';
 
-const usePostSearch = (queries, pageNumber, setPosts, setLoading, setError, setHasMore, refresh) => {
+const usePostSearch = (
+  queries,
+  pageNumber,
+  setPosts,
+  setLoading,
+  setError,
+  setHasMore,
+  refresh
+) => {
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
@@ -11,24 +19,23 @@ const usePostSearch = (queries, pageNumber, setPosts, setLoading, setError, setH
     (async () => {
       if (isMounted) {
         try {
-          const newPosts = await postAPI.get(request, pageNumber, { 
+          const newPosts = await postAPI.get(request, pageNumber, {
             username: queries.username,
             search: queries.search,
-            sortBy: queries.sortBy
+            sortBy: queries.sortBy,
           });
 
-          setPosts(prevPosts => {
+          setPosts((prevPosts) => {
             const set = new Set();
-            return [...prevPosts, ...newPosts].filter(post => {
+            return [...prevPosts, ...newPosts].filter((post) => {
               const duplicate = set.has(post._id);
               set.add(post._id);
               return !duplicate;
-            })
+            });
           });
           setHasMore(newPosts.length === 10);
           setLoading(false);
-
-        } catch(e) {
+        } catch (e) {
           setLoading(false);
           if (!axios.isCancel(e)) setError(true);
         }
@@ -38,7 +45,17 @@ const usePostSearch = (queries, pageNumber, setPosts, setLoading, setError, setH
       request.cancel();
       isMounted = false;
     };
-  }, [queries.username, queries.search, queries.sortBy, pageNumber, setPosts, setLoading, setError, setHasMore, refresh]);
+  }, [
+    queries.username,
+    queries.search,
+    queries.sortBy,
+    pageNumber,
+    setPosts,
+    setLoading,
+    setError,
+    setHasMore,
+    refresh,
+  ]);
 };
 
 export default usePostSearch;

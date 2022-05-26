@@ -1,5 +1,5 @@
-import { Schema, model, Document } from "mongoose";
-import bcrypt from "bcrypt";
+import { Schema, model, Document } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 interface FollowInterface {
   username: string;
@@ -29,15 +29,15 @@ export interface UserDataInterface {
 const userSchema = new Schema<UserInterface>({
   avatar: {
     type: String,
-    required: true
+    required: true,
   },
   nickname: {
     type: String,
-    required: true
+    required: true,
   },
   followers: {
     type: Number,
-    required: true
+    required: true,
   },
   follows: {
     type: [{ username: String, createdAt: Date }],
@@ -45,34 +45,38 @@ const userSchema = new Schema<UserInterface>({
   username: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    required: true
+    required: true,
   },
   updatedAt: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
-userSchema.methods.encryptPassword = async (password: string): Promise<string> => {
+userSchema.methods.encryptPassword = async (
+  password: string
+): Promise<string> => {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 };
 
-userSchema.methods.validatePassword = async function (password: string): Promise<boolean> {
+userSchema.methods.validatePassword = async function (
+  password: string
+): Promise<boolean> {
   return await bcrypt.compare(password, this.password);
 };
 
-export default model<UserInterface>("User", userSchema);
+export default model<UserInterface>('User', userSchema);

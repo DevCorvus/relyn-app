@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { resetPosts } from "../redux/postsSlice";
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { resetPosts } from '../redux/postsSlice';
 
 const useResetPosts = () => {
   const dispatch = useDispatch();
   const willMount = useRef(true);
 
-  if (willMount.current) dispatch(resetPosts()); 
-  
+  if (willMount.current) dispatch(resetPosts());
+
   willMount.current = false;
 };
 

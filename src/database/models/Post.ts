@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface LikeInterface {
   username: string;
@@ -20,23 +20,23 @@ export interface PostInterface {
 const postSchema = new Schema<PostInterface>({
   userId: {
     type: String,
-    required: true
+    required: true,
   },
   username: {
     type: String,
-    required: true
+    required: true,
   },
   body: {
     type: String,
-    required: true
+    required: true,
   },
   imageUrl: {
     type: String,
-    required: false
+    required: false,
   },
   commentsCount: {
     type: Number,
-    default: 0
+    default: 0,
   },
   likes: {
     type: [{ username: String, createdAt: Date }],
@@ -44,16 +44,16 @@ const postSchema = new Schema<PostInterface>({
   edited: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
   createdAt: {
     type: Date,
-    required: true
+    required: true,
   },
   updatedAt: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
-export default model<PostInterface>("Post", postSchema);
+export default model<PostInterface>('Post', postSchema);

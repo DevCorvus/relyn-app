@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function Avatar({ size, avatar, nickname }) {
   return (
@@ -7,8 +7,8 @@ export default function Avatar({ size, avatar, nickname }) {
         <img
           className="rounded-full"
           src={`https://avatars.dicebear.com/api/micah/${avatar}.svg`}
-          alt={nickname + " Avatar"}
-          title={nickname + " Avatar"}
+          alt={nickname + ' Avatar'}
+          title={nickname + ' Avatar'}
         />
       )}
     </div>

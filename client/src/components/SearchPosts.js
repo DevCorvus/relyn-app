@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import SearchInput from "./SearchInput";
+import React, { useState, useEffect } from 'react';
+import SearchInput from './SearchInput';
 
 export default function SearchPosts({ setQueries }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    setQueries(prevQueries => ({ ...prevQueries, search }));
+    setQueries((prevQueries) => ({ ...prevQueries, search }));
   }, [search, setQueries]);
 
   return (

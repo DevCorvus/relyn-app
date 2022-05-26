@@ -1,6 +1,6 @@
-import React from "react";
-import Label from "./Label";
-import ValidationError from "./errors/ValidationError";
+import React from 'react';
+import Label from './Label';
+import ValidationError from './errors/ValidationError';
 
 export default function FormInput({
   children,
@@ -10,15 +10,18 @@ export default function FormInput({
   name,
   id,
   error,
-  type = "text",
-  label = "",
+  type = 'text',
+  label = '',
   textarea = false,
   defaultValue = false,
-  autoFocus = false
+  autoFocus = false,
 }) {
-
-  let inputClassName = `w-full p-2 border-2 ${error ? "border-red-200" : "border-gray-200"} rounded-md outline-none focus:${error ? "border-red-400" : "border-blue-300"} transition duration-200`;
-  if (textarea) inputClassName += " resize-none";
+  let inputClassName = `w-full p-2 border-2 ${
+    error ? 'border-red-200' : 'border-gray-200'
+  } rounded-md outline-none focus:${
+    error ? 'border-red-400' : 'border-blue-300'
+  } transition duration-200`;
+  if (textarea) inputClassName += ' resize-none';
 
   return (
     <div>

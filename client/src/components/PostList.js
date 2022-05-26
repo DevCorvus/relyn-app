@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import Loading from "./loadings/Loading";
-import Error from "./errors/Error";
-import PostItem from "./PostItem";
-import PostListControls from "./PostListControls";
-import PostForm from "./PostForm";
-import Message from "./Message";
-import usePostSearch from "../hooks/usePostSearch";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Loading from './loadings/Loading';
+import Error from './errors/Error';
+import PostItem from './PostItem';
+import PostListControls from './PostListControls';
+import PostForm from './PostForm';
+import Message from './Message';
+import usePostSearch from '../hooks/usePostSearch';
 
 const queryInitialState = {
-  username: "",
-  search: "",
-  sortBy: "latest"
+  username: '',
+  search: '',
+  sortBy: 'latest',
 };
 
-export default function PostList({ showForm, queriesInitialState = queryInitialState }) {
+export default function PostList({
+  showForm,
+  queriesInitialState = queryInitialState,
+}) {
   const [posts, setPosts] = useState([]);
   const [queries, setQueries] = useState(queriesInitialState);
 
@@ -24,19 +27,30 @@ export default function PostList({ showForm, queriesInitialState = queryInitialS
   const [refresh, setRefresh] = useState(false);
 
   const observer = useRef(null);
-  const lastPostRef = useCallback(node => {
-    if (isLoading) return;
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        setPageNumber(prevPageNumber => prevPageNumber + 1);
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, [isLoading, hasMore]);
+  const lastPostRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
 
-  usePostSearch(queries, pageNumber, setPosts, setLoading, setError, setHasMore, refresh);
-  
+  usePostSearch(
+    queries,
+    pageNumber,
+    setPosts,
+    setLoading,
+    setError,
+    setHasMore,
+    refresh
+  );
+
   useEffect(() => {
     setPageNumber(1);
     setPosts([]);
@@ -52,20 +66,20 @@ export default function PostList({ showForm, queriesInitialState = queryInitialS
         <PostListControls setQueries={setQueries} setRefresh={setRefresh} />
       </div>
       <div className="flex flex-col gap-4">
-        {(!isLoading && posts.length === 0) ? (
+        {!isLoading && posts.length === 0 ? (
           <Message text="There are no posts to show ./" />
         ) : (
           <>
-          {posts.map((post, i) => {
-            if (posts.length === i + 1) {
-              return (
-                <div key={post._id} ref={lastPostRef}>
-                  <PostItem setPosts={setPosts} {...post} />
-                </div>
-              );
-            }
-            return <PostItem key={post._id} setPosts={setPosts} {...post} />
-          })}
+            {posts.map((post, i) => {
+              if (posts.length === i + 1) {
+                return (
+                  <div key={post._id} ref={lastPostRef}>
+                    <PostItem setPosts={setPosts} {...post} />
+                  </div>
+                );
+              }
+              return <PostItem key={post._id} setPosts={setPosts} {...post} />;
+            })}
           </>
         )}
         {isLoading && <Loading />}

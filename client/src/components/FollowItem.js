@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser, follow, unfollow } from "../redux/userSlice";
-import userAPI from "../APIs/userAPI";
-import UserCard from "./UserCard";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, follow, unfollow } from '../redux/userSlice';
+import userAPI from '../APIs/userAPI';
+import UserCard from './UserCard';
 
 export default function FollowItem({ avatar, nickname, username, followers }) {
   const dispatch = useDispatch();
@@ -21,13 +21,15 @@ export default function FollowItem({ avatar, nickname, username, followers }) {
         setCurrentFollowers(currentFollowers + 1);
         await userAPI.follow(username);
       }
-    } catch(e) {
+    } catch (e) {
       // ...
     }
   };
 
   useEffect(() => {
-    setFollowed(user.follows.filter(follow => follow.username === username).length > 0);
+    setFollowed(
+      user.follows.filter((follow) => follow.username === username).length > 0
+    );
   }, [username, user.follows]);
 
   return (

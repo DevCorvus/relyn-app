@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../redux/userSlice";
-import Avatar from "./Avatar";
-import UserInfo from "./UserInfo";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../redux/userSlice';
+import Avatar from './Avatar';
+import UserInfo from './UserInfo';
 
 export default function User({ username, size, avatar, nickname }) {
   const user = useSelector(selectUser);
@@ -27,13 +27,21 @@ export default function User({ username, size, avatar, nickname }) {
       ) : (
         <div className="relative">
           {showModal && (
-            <div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} style={{ minWidth: "18rem" }} className="absolute -top-28">
+            <div
+              onMouseOver={handleMouseOver}
+              onMouseLeave={handleMouseLeave}
+              style={{ minWidth: '18rem' }}
+              className="absolute -top-28"
+            >
               <UserInfo username={username} />
-              <div style={{
-                borderRight: "15px solid transparent",
-                // borderLeft: "20px solid transparent",
-                borderTop: "15px solid #fff"
-              }} className="ml-7 w-0 h-0 z-10"></div>
+              <div
+                style={{
+                  borderRight: '15px solid transparent',
+                  // borderLeft: "20px solid transparent",
+                  borderTop: '15px solid #fff',
+                }}
+                className="ml-7 w-0 h-0 z-10"
+              ></div>
             </div>
           )}
           <div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>

@@ -1,7 +1,14 @@
-import { useEffect } from "react";
-import postAPI from "../APIs/postAPI";
+import { useEffect } from 'react';
+import postAPI from '../APIs/postAPI';
 
-const usePostSearch = (userId, pageNumber, setPosts, setLoading, setError, setHasMore) => {
+const usePostSearch = (
+  userId,
+  pageNumber,
+  setPosts,
+  setLoading,
+  setError,
+  setHasMore
+) => {
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
@@ -9,16 +16,18 @@ const usePostSearch = (userId, pageNumber, setPosts, setLoading, setError, setHa
       if (isMounted) {
         try {
           const newPosts = await postAPI.showAll(userId, pageNumber);
-          setPosts(prevPosts => [...prevPosts, ...newPosts]);
+          setPosts((prevPosts) => [...prevPosts, ...newPosts]);
           setHasMore(newPosts.length > 0);
           setLoading(false);
-        } catch(e) {
+        } catch (e) {
           setLoading(false);
           setError(true);
         }
       }
     })();
-    return () => { isMounted = false };
+    return () => {
+      isMounted = false;
+    };
   }, [userId, pageNumber, setPosts, setLoading, setError, setHasMore]);
 };
 

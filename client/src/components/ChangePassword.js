@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import val from "validator";
-import userAPI from "../APIs/userAPI";
-import useValidation from "../hooks/useValidation";
-import Button from "./Button";
-import Modal from "./Modal";
-import ModalContainer from "./ModalContainer";
-import FormInput from "./FormInput";
-import ContextLabel from "./ContextLabel";
-import ResponseError from "./errors/ResponseError";
+import React, { useEffect, useState } from 'react';
+import val from 'validator';
+import userAPI from '../APIs/userAPI';
+import useValidation from '../hooks/useValidation';
+import Button from './Button';
+import Modal from './Modal';
+import ModalContainer from './ModalContainer';
+import FormInput from './FormInput';
+import ContextLabel from './ContextLabel';
+import ResponseError from './errors/ResponseError';
 
 const initialState = {
-  currentPassword: "",
-  newPassword: "",
-  newPasswordConfirmation: ""
+  currentPassword: '',
+  newPassword: '',
+  newPasswordConfirmation: '',
 };
 
 export default function ChangePassword() {
   const [showModal, setShowModal] = useState(false);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState('');
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [validation, setValidation] = useState(initialState);
   const [data, setData] = useState(initialState);
@@ -27,8 +27,8 @@ export default function ChangePassword() {
     const value = e.target.value;
     setData({ ...data, [name]: value });
     !val.isLength(value, { min: 8, max: 250 })
-    ? setValidation({ ...validation, [name]: "Invalid password" })
-    : setValidation({ ...validation, [name]: "" });
+      ? setValidation({ ...validation, [name]: 'Invalid password' })
+      : setValidation({ ...validation, [name]: '' });
   };
 
   const handleSubmit = async (e) => {
@@ -37,18 +37,24 @@ export default function ChangePassword() {
       setData(initialState);
       await userAPI.changePassword(data);
       setShowModal(false);
-    } catch(err) {
+    } catch (err) {
       setResponse(err.response.data);
       setTimeout(() => {
-        setResponse("");
+        setResponse('');
       }, 3000);
     }
   };
 
   useEffect(() => {
     data.newPassword !== data.newPasswordConfirmation
-    ? setValidation(prevState => ({ ...prevState, newPasswordConfirmation: "Passwords doesn't match" }))
-    : setValidation(prevState => ({ ...prevState, newPasswordConfirmation: "" }));
+      ? setValidation((prevState) => ({
+          ...prevState,
+          newPasswordConfirmation: "Passwords doesn't match",
+        }))
+      : setValidation((prevState) => ({
+          ...prevState,
+          newPasswordConfirmation: '',
+        }));
   }, [data.newPassword, data.newPasswordConfirmation]);
 
   useValidation(data, validation, setDisableSubmit);
@@ -61,7 +67,11 @@ export default function ChangePassword() {
       <Modal showModal={showModal}>
         <ModalContainer>
           <ResponseError response={response} outside={true} />
-          <form className="flex flex-col gap-2" autoComplete="off" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col gap-2"
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
             <ContextLabel>Change Password</ContextLabel>
 
             <FormInput
@@ -72,7 +82,9 @@ export default function ChangePassword() {
               onChange={handleChange}
               error={validation.currentPassword}
               autoFocus={true}
-            >Current password</FormInput>
+            >
+              Current password
+            </FormInput>
 
             <FormInput
               label="New Password"
@@ -81,7 +93,9 @@ export default function ChangePassword() {
               value={data.newPassword}
               onChange={handleChange}
               error={validation.newPassword}
-            >New password</FormInput>
+            >
+              New password
+            </FormInput>
 
             <FormInput
               label="Repeat new password"
@@ -90,7 +104,9 @@ export default function ChangePassword() {
               value={data.newPasswordConfirmation}
               onChange={handleChange}
               error={validation.newPasswordConfirmation}
-            >Repeat new password</FormInput>
+            >
+              Repeat new password
+            </FormInput>
 
             <div className="mt-2">
               <Button isDisabled={disableSubmit} type="submit">
@@ -100,7 +116,6 @@ export default function ChangePassword() {
                 Cancel
               </Button>
             </div>
-
           </form>
         </ModalContainer>
       </Modal>

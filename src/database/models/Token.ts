@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface TokenInterface {
   userId: string;
@@ -10,21 +10,21 @@ interface TokenInterface {
 const tokenSchema = new Schema<TokenInterface>({
   userId: {
     type: String,
-    required: true
+    required: true,
   },
   refreshToken: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    required: true
+    required: true,
   },
   expiresAt: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
-export default model<TokenInterface>("Token", tokenSchema);
+export default model<TokenInterface>('Token', tokenSchema);

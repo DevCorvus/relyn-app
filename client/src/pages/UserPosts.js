@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import PostList from "../components/PostList";
-import Loading from "../components/loadings/Loading";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import PostList from '../components/PostList';
+import Loading from '../components/loadings/Loading';
 
 export default function UserPosts() {
   const { username } = useParams();
@@ -15,8 +15,6 @@ export default function UserPosts() {
   }, [username]);
 
   return (
-    <>
-      {show ? <PostList queriesInitialState={{ username }} /> : <Loading />}
-    </>
+    <>{show ? <PostList queriesInitialState={{ username }} /> : <Loading />}</>
   );
 }

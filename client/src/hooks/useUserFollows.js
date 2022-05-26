@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../redux/userSlice";
-import userAPI from "../APIs/userAPI";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../redux/userSlice';
+import userAPI from '../APIs/userAPI';
 
 const useUserFollows = (setFollows, setLoading, setError) => {
   const user = useSelector(selectUser);
@@ -13,7 +13,7 @@ const useUserFollows = (setFollows, setLoading, setError) => {
           const usersInfo = await userAPI.followsInfo(user._id);
           setFollows(usersInfo);
           setLoading(false);
-        } catch(e) {
+        } catch (e) {
           setLoading(false);
           setError(true);
         }

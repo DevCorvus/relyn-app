@@ -1,6 +1,6 @@
-import React from "react";
-import Profile from "./Profile";
-import Follows from "./Follows";
+import React from 'react';
+import Profile from './Profile';
+import Follows from './Follows';
 
 export default function Dashboard() {
   return (

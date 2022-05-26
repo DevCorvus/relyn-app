@@ -1,9 +1,16 @@
-import React from "react";
-import moment from "moment";
-import Label from "./Label";
-import Avatar from "./Avatar";
+import React from 'react';
+import moment from 'moment';
+import Label from './Label';
+import Avatar from './Avatar';
 
-export default function AccountInfo({ avatar, nickname, username, email, createdAt, updatedAt }) {
+export default function AccountInfo({
+  avatar,
+  nickname,
+  username,
+  email,
+  createdAt,
+  updatedAt,
+}) {
   return (
     <section className="my-4 bg-gray-50 border-2 border-gray-100 rounded-md">
       <ul className="flex flex-col gap-2 text-xl text-center">
