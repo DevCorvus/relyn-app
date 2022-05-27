@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { randomBytes } from 'crypto';
 import { verify } from 'jsonwebtoken';
+import { getEnv } from '../config/env';
 
 import Token from '../models/Token';
 
@@ -12,14 +13,11 @@ import {
   PayloadInterface,
   TokenResponseInterface,
 } from '../utils/token';
-import {
-  NODE_ENV,
-  REFRESH_TOKEN_SECRET,
-  REFRESH_TOKEN_COOKIE,
-  ACCESS_TOKEN_COOKIE,
-} from '../utils/env';
 
 export const refreshToken = async (req: Request, res: Response) => {
+  const { REFRESH_TOKEN_SECRET, REFRESH_TOKEN_COOKIE, ACCESS_TOKEN_COOKIE } =
+    getEnv();
+
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   if (!token) return res.sendStatus(401);
 
@@ -46,6 +44,8 @@ export const refreshToken = async (req: Request, res: Response) => {
 };
 
 export const csrfToken = async (req: Request, res: Response) => {
+  const { NODE_ENV } = getEnv();
+
   if (!req.session) return res.sendStatus(500);
 
   if (!req.session.csrfToken)

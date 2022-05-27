@@ -5,13 +5,16 @@ import User from '../models/User';
 import Token from '../models/Token';
 
 import { PayloadInterface, tokenSlayer } from '../utils/token';
-import { ACCESS_TOKEN_SECRET } from '../utils/env';
+
+import { getEnv } from '../config/env';
 
 export async function authToken(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
+  const { ACCESS_TOKEN_SECRET } = getEnv();
+
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 

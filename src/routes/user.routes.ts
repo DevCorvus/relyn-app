@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import * as userController from '../controllers/user.controller';
 
-import { authToken } from '../middlewares/authToken.middleware';
-import { csrfProtection } from '../middlewares/csrfProtection.middleware';
+import { authToken } from '../middlewares/authToken';
+import { csrfProtection } from '../middlewares/csrfProtection';
 import {
   validate,
   userValidationRules,
@@ -12,7 +12,7 @@ import {
   passwordValidationRules,
   newEmailValidationRules,
   passwordChangeValidationRules,
-} from '../middlewares/validation.middleware';
+} from '../middlewares/expressValidator';
 
 const router = Router();
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { randomBytes } from 'crypto';
+import { getEnv } from '../config/env';
 
 import User, { UserInterface, UserDataInterface } from '../models/User';
 
@@ -12,7 +13,6 @@ import {
   sendTokens,
 } from '../utils/token';
 import { getUserInfo } from '../utils/user';
-import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../utils/env';
 
 interface UserLoginInterface {
   usernameOrEmail: string;
@@ -79,6 +79,8 @@ export const store = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  const { REFRESH_TOKEN_COOKIE } = getEnv();
+
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   if (token) return res.status(409).send('User Already Logged In');
 
@@ -99,6 +101,8 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
+  const { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } = getEnv();
+
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   tokenSlayer.add(res.locals.accessToken);
   if (!token) return res.sendStatus(403);
@@ -186,6 +190,8 @@ export const changeEmail = async (req: Request, res: Response) => {
 };
 
 export const destroy = async (req: Request, res: Response) => {
+  const { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } = getEnv();
+
   const userId = res.locals.userId;
   const password = req.body.password;
 

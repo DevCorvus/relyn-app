@@ -1,12 +1,9 @@
 import { Router } from 'express';
 import * as commentController from '../controllers/comment.controller';
 
-import { authToken } from '../middlewares/authToken.middleware';
-import { csrfProtection } from '../middlewares/csrfProtection.middleware';
-import {
-  validate,
-  postValidationRules,
-} from '../middlewares/validation.middleware';
+import { authToken } from '../middlewares/authToken';
+import { csrfProtection } from '../middlewares/csrfProtection';
+import { validate, postValidationRules } from '../middlewares/expressValidator';
 
 const router = Router();
 

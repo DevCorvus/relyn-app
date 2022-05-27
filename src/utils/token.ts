@@ -1,18 +1,8 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { getEnv } from '../config/env';
 
 import Token from '../models/Token';
-
-import {
-  NODE_ENV,
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET,
-  ACCESS_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-  ACCESS_TOKEN_EXPIRATION,
-  REFRESH_TOKEN_EXPIRATION,
-} from '../utils/env';
-
 import { DAY_IN_MS, YEAR_IN_MS } from './constants';
 
 export interface PayloadInterface {
@@ -31,8 +21,11 @@ interface TokensInterface {
 export type TokenResponseInterface = TokensInterface | false;
 
 type Token = string;
-export const tokenSlayer = ((slayTime: number) => {
+export const tokenSlayer = (() => {
+  const { ACCESS_TOKEN_EXPIRATION } = getEnv();
+
   let tokensInLine: Token[] = [];
+
   return {
     get: () => tokensInLine,
     add: (token: Token) => {
@@ -41,10 +34,10 @@ export const tokenSlayer = ((slayTime: number) => {
         tokensInLine = tokensInLine.filter(
           (tokenInLine) => tokenInLine !== token
         );
-      }, slayTime);
+      }, ACCESS_TOKEN_EXPIRATION);
     },
   };
-})(ACCESS_TOKEN_EXPIRATION);
+})();
 
 export const deleteRefreshToken = async (token: string): Promise<boolean> => {
   try {
@@ -70,15 +63,25 @@ export const generateTokens = async (
   _id: string,
   remember: boolean = false
 ): Promise<TokenResponseInterface> => {
+  const {
+    ACCESS_TOKEN_SECRET,
+    ACCESS_TOKEN_EXPIRATION,
+    REFRESH_TOKEN_SECRET,
+    REFRESH_TOKEN_EXPIRATION,
+  } = getEnv();
+
   const accessToken: string = jwt.sign({ _id }, ACCESS_TOKEN_SECRET, {
     expiresIn: ACCESS_TOKEN_EXPIRATION,
   });
+
   let refreshToken: string;
+
   try {
     if (!remember) {
       refreshToken = jwt.sign({ _id }, REFRESH_TOKEN_SECRET, {
         expiresIn: REFRESH_TOKEN_EXPIRATION,
       });
+
       await Token.create({
         userId: _id,
         refreshToken,
@@ -89,6 +92,7 @@ export const generateTokens = async (
       refreshToken = jwt.sign({ _id, remember }, REFRESH_TOKEN_SECRET, {
         expiresIn: YEAR_IN_MS,
       });
+
       await Token.create({
         userId: _id,
         refreshToken,
@@ -104,6 +108,15 @@ export const generateTokens = async (
 
 export const sendTokens = (res: Response, tokens: TokenResponseInterface) => {
   if (!tokens) return res.sendStatus(500);
+
+  const {
+    NODE_ENV,
+    ACCESS_TOKEN_COOKIE,
+    ACCESS_TOKEN_EXPIRATION,
+    REFRESH_TOKEN_COOKIE,
+    REFRESH_TOKEN_EXPIRATION,
+  } = getEnv();
+
   const { accessToken, refreshToken } = tokens;
 
   res.cookie(ACCESS_TOKEN_COOKIE, accessToken, {
