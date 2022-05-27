@@ -19,7 +19,8 @@ const usePostSearch = (
     (async () => {
       if (isMounted) {
         try {
-          const newPosts = await postAPI.get(request, pageNumber, {
+          const newPosts = await postAPI.get(request, {
+            page: pageNumber,
             username: queries.username,
             search: queries.search,
             sortBy: queries.sortBy,

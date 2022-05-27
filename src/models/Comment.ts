@@ -30,7 +30,6 @@ const commentSchema = new Schema<CommentInterface>(
     },
     edited: {
       type: Boolean,
-      required: true,
       default: false,
     },
   },

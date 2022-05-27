@@ -2,6 +2,7 @@ export const numberFormatter = (num) => {
   const numberSuffixer = (numberToSuffix, suffix) => {
     const integer = Math.floor(numberToSuffix);
     const decimal = Number(String(numberToSuffix).split('.')[1]);
+
     if (integer < 100 && decimal !== 0) return integer + '.' + decimal + suffix;
     return integer + suffix;
   };
@@ -20,25 +21,14 @@ export const numberFormatter = (num) => {
 export const capitalizeText = (text) => {
   if (typeof text !== 'string')
     throw new Error('text parameter must be an string');
+
   let textCapitalized = text.toLowerCase();
   textCapitalized.replace(textCapitalized[0], textCapitalized[0].toUpperCase());
+
   return textCapitalized;
 };
 
-export const urlPusher = (url, queries) => {
-  let completeUrl = url;
-  const queryNames = Object.keys(queries);
-
-  queryNames.forEach((query) => {
-    if (queries[query]) {
-      completeUrl += ''.concat(
-        '&',
-        query,
-        '=',
-        queries[query].split(' ').join('+')
-      );
-    }
-  });
-
-  return completeUrl;
+export const appendUrlParams = (url, params) => {
+  const searchParams = new URLSearchParams(params).toString();
+  return url + '?' + searchParams;
 };

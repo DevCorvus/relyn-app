@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { SERVER_API_URL } from '../config.json';
 import { getToken, getCsrfToken } from './authAPI';
-import { urlPusher } from '../utils/general';
+import { appendUrlParams } from '../utils/general';
 
-const get = async (request, pageNumber, queries) => {
+const get = async (request, queries) => {
   const { data: response } = await axios.get(
-    urlPusher(`${SERVER_API_URL}/posts?page=${pageNumber}`, queries),
+    appendUrlParams(`${SERVER_API_URL}/posts`, queries),
     {
       cancelToken: request.token,
     }

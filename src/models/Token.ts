@@ -19,7 +19,7 @@ const tokenSchema = new Schema<TokenInterface>({
   },
   createdAt: {
     type: Number,
-    required: true,
+    default: Date.now,
   },
   expiresAt: {
     type: Number,

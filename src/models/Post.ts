@@ -44,7 +44,6 @@ const postSchema = new Schema<PostInterface>(
     },
     edited: {
       type: Boolean,
-      required: true,
       default: false,
     },
   },

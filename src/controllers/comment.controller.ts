@@ -33,8 +33,6 @@ export const store = async (req: Request, res: Response) => {
       userId,
       username,
       body,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     });
 
     await Post.findByIdAndUpdate(postId, { $inc: { commentsCount: 1 } });
@@ -57,7 +55,6 @@ export const update = async (req: Request, res: Response) => {
     await comment.update({
       body,
       edited: true,
-      updatedAt: Date.now(),
     });
 
     return res.status(201).send('Comment updated succesfully');

@@ -85,7 +85,6 @@ export const generateTokens = async (
       await Token.create({
         userId: _id,
         refreshToken,
-        createdAt: Date.now(),
         expiresAt: Date.now() + REFRESH_TOKEN_EXPIRATION,
       });
     } else {
@@ -96,7 +95,6 @@ export const generateTokens = async (
       await Token.create({
         userId: _id,
         refreshToken,
-        createdAt: Date.now(),
         expiresAt: Date.now() + YEAR_IN_MS,
       });
     }

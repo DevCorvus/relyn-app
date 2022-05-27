@@ -38,7 +38,7 @@ const userSchema = new Schema<UserInterface>(
     },
     followers: {
       type: Number,
-      required: true,
+      default: 0,
     },
     follows: {
       type: [{ username: String, createdAt: Date }],

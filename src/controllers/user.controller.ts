@@ -60,13 +60,10 @@ export const store = async (req: Request, res: Response) => {
     const newUser: UserInterface = new User({
       avatar: randomString,
       nickname: username,
-      followers: 0,
       follows: [],
       username,
       email,
       password,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     });
     newUser.password = await newUser.encryptPassword(password);
     const { _id } = await newUser.save();

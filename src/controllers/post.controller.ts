@@ -70,9 +70,6 @@ export const store = async (req: Request, res: Response) => {
       body,
       imageUrl: imageUrlToSave,
       likes: [],
-      edited: false,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     });
     return res.status(201).json(newPost);
   } catch (err) {
@@ -107,7 +104,6 @@ export const update = async (req: Request, res: Response) => {
           body,
           imageUrl: imageUrlToSave,
           edited: true,
-          updatedAt: Date.now(),
         });
 
         return res.status(201).send('Post updated successfully');
