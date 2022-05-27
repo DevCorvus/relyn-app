@@ -1,6 +1,5 @@
 import { Application, json } from 'express';
 import helmet from 'helmet';
-import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 
@@ -26,7 +25,12 @@ export async function registerMiddlewares(app: Application) {
     app.enable('trust proxy');
     app.use(redirectOverHttps);
   } else {
+    const morgan = (await import('morgan')).default;
     app.use(morgan('dev'));
+    app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      next();
+    });
   }
   app.use(json());
   app.use(cookieParser(SIGNED_COOKIES_SECRET));
