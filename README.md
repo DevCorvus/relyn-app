@@ -1,4 +1,6 @@
-<img style="margin-left: auto; margin-right: auto; display: block;" src="./relyn-icon.png" alt="Relyn Icon">
+<p align="center">
+  <img src="./relyn-icon.png" alt="Relyn Icon">
+</p>
 
 <h1 align="center">Relyn App</h1>
 
