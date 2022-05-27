@@ -3,7 +3,7 @@ import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 export const limitGlobalRequestsPerIp = new RateLimiterMemory({
   keyPrefix: 'too_many_requests',
-  points: 6,
+  points: 20,
   duration: 1,
 });
 

@@ -1,11 +1,15 @@
 {
-  "engines": {
-    "node": "16.x"
-  },
+  "private": true,
   "name": "relyn-server",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Relyn App project (experimental)",
-  "main": "index.ts",
+  "author": {
+    "name": "Luis Portillo",
+    "email": "devcorvus.contact@gmail.com",
+    "url": "https://www.devcorvus.com"
+  },
+  "license": "GPL-3.0",
+  "main": "src/index.ts",
   "scripts": {
     "format": "prettier --write .",
     "dev:server": "nodemon ./src/index.ts --ignore ./client",
@@ -19,8 +23,6 @@
     "start": "npm run start:server",
     "heroku-postbuild": "npm install --prefix client && npm run build"
   },
-  "author": "Luis Portillo",
-  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
@@ -45,6 +47,7 @@
     "@types/morgan": "^1.9.3",
     "@types/validator": "^13.7.2",
     "concurrently": "^7.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.16",
@@ -52,5 +55,8 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

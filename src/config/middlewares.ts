@@ -32,10 +32,14 @@ export async function registerMiddlewares(app: Application) {
   } else {
     const morgan = (await import('morgan')).default;
     app.use(morgan('dev'));
-    app.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      next();
-    });
+
+    const cors = (await import('cors')).default;
+    app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+      })
+    );
   }
   app.use(json());
   app.use(cookieParser(SIGNED_COOKIES_SECRET));
