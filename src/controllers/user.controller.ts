@@ -1,5 +1,8 @@
-import type { Request, Response } from 'express';
+import { Request, Response } from 'express';
+import { randomBytes } from 'crypto';
+
 import User, { UserInterface, UserDataInterface } from '../models/User';
+
 import {
   generateTokens,
   deleteRefreshToken,
@@ -8,9 +11,8 @@ import {
   tokenSlayer,
   sendTokens,
 } from '../utils/token';
-import { getUserInfo } from '../utils/database';
+import { getUserInfo } from '../utils/user';
 import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from '../utils/env';
-import { randomBytes } from 'crypto';
 
 interface UserLoginInterface {
   usernameOrEmail: string;
@@ -50,7 +52,7 @@ export const exists = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
-const store = async (req: Request, res: Response) => {
+export const store = async (req: Request, res: Response) => {
   const { username, email, password } = req.body as UserDataInterface;
 
   try {
@@ -76,7 +78,7 @@ const store = async (req: Request, res: Response) => {
   }
 };
 
-const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   if (token) return res.status(409).send('User Already Logged In');
 
@@ -96,7 +98,7 @@ const login = async (req: Request, res: Response) => {
   sendTokens(res, tokens);
 };
 
-const logout = async (req: Request, res: Response) => {
+export const logout = async (req: Request, res: Response) => {
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   tokenSlayer.add(res.locals.accessToken);
   if (!token) return res.sendStatus(403);
@@ -106,13 +108,13 @@ const logout = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
-const account = async (req: Request, res: Response) => {
+export const account = async (req: Request, res: Response) => {
   const user = await User.findById(res.locals.userId, { password: 0 });
   if (!user) return res.status(404).send('No user found');
   res.status(200).json(user);
 };
 
-const changeAvatar = async (req: Request, res: Response) => {
+export const changeAvatar = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const { newAvatar } = req.body;
   try {
@@ -125,7 +127,7 @@ const changeAvatar = async (req: Request, res: Response) => {
   }
 };
 
-const changeNickname = async (req: Request, res: Response) => {
+export const changeNickname = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const { newNickname } = req.body;
   try {
@@ -138,7 +140,7 @@ const changeNickname = async (req: Request, res: Response) => {
   }
 };
 
-const changePassword = async (req: Request, res: Response) => {
+export const changePassword = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const password = req.body.currentPassword;
   const newPassword = req.body.newPassword;
@@ -159,7 +161,7 @@ const changePassword = async (req: Request, res: Response) => {
   }
 };
 
-const changeEmail = async (req: Request, res: Response) => {
+export const changeEmail = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const { password, newEmail } = req.body as UserEmailChangeInterface;
 
@@ -183,7 +185,7 @@ const changeEmail = async (req: Request, res: Response) => {
   }
 };
 
-const destroy = async (req: Request, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const password = req.body.password;
 
@@ -206,7 +208,7 @@ const destroy = async (req: Request, res: Response) => {
   }
 };
 
-const info = async (req: Request, res: Response) => {
+export const info = async (req: Request, res: Response) => {
   const username = req.params.username;
 
   try {
@@ -219,7 +221,7 @@ const info = async (req: Request, res: Response) => {
   }
 };
 
-const follow = async (req: Request, res: Response) => {
+export const follow = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const username = req.params.username;
 
@@ -252,7 +254,7 @@ const follow = async (req: Request, res: Response) => {
   }
 };
 
-const unfollow = async (req: Request, res: Response) => {
+export const unfollow = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const username = req.params.username;
 
@@ -284,7 +286,7 @@ const unfollow = async (req: Request, res: Response) => {
   }
 };
 
-const followsInfo = async (req: Request, res: Response) => {
+export const followsInfo = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
 
   try {
@@ -298,22 +300,4 @@ const followsInfo = async (req: Request, res: Response) => {
   } catch (e) {
     res.sendStatus(500);
   }
-};
-
-export default {
-  index,
-  exists,
-  store,
-  login,
-  logout,
-  account,
-  changeAvatar,
-  changeNickname,
-  changePassword,
-  changeEmail,
-  destroy,
-  info,
-  follow,
-  unfollow,
-  followsInfo,
 };

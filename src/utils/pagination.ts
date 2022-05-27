@@ -13,14 +13,14 @@ interface PaginateInterface {
   sortBy?: SortByType;
 }
 
-export const paginate = async ({
+export async function paginate({
   type,
   page,
   postId,
   username,
   search,
   sortBy,
-}: PaginateInterface) => {
+}: PaginateInterface) {
   let limit: number;
   type === 'post' ? (limit = 10) : (limit = 5);
   const skipIndex = (page - 1) * limit;
@@ -119,4 +119,4 @@ export const paginate = async ({
   } catch (e) {
     return false;
   }
-};
+}

@@ -3,7 +3,7 @@ dotenv.config();
 
 import { initializeServer } from './core/server';
 import { databaseConnection } from './core/database';
-import { expiredTokensCleaner } from './utils/database';
+import { expiredTokensCleaner } from './utils/token';
 
 (async () => {
   await databaseConnection();

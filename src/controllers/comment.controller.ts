@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
+
 import Post from '../models/Post';
 import Comment from '../models/Comment';
-import { paginate } from '../utils/pagination';
-import { getUserUsername } from '../utils/database';
 
-const index = async (req: Request, res: Response) => {
+import { paginate } from '../utils/pagination';
+import { getUserUsername } from '../utils/user';
+
+export const index = async (req: Request, res: Response) => {
   const { postId } = req.params;
   const page = parseInt(req.query.page as string);
 
@@ -14,7 +16,7 @@ const index = async (req: Request, res: Response) => {
   res.status(200).json(comments);
 };
 
-const store = async (req: Request, res: Response) => {
+export const store = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const { postId } = req.params;
   const { body } = req.body as { body: string };
@@ -42,7 +44,7 @@ const store = async (req: Request, res: Response) => {
   }
 };
 
-const update = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const id = req.params.id;
   const { body } = req.body;
@@ -64,7 +66,7 @@ const update = async (req: Request, res: Response) => {
   }
 };
 
-const destroy = async (req: Request, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const id = req.params.id;
 
@@ -84,11 +86,4 @@ const destroy = async (req: Request, res: Response) => {
   } catch (e) {
     res.sendStatus(500);
   }
-};
-
-export default {
-  index,
-  store,
-  update,
-  destroy,
 };

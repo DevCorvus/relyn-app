@@ -1,6 +1,8 @@
-import type { Response } from 'express';
+import { Response } from 'express';
 import jwt from 'jsonwebtoken';
+
 import Token from '../models/Token';
+
 import {
   NODE_ENV,
   ACCESS_TOKEN_SECRET,
@@ -11,7 +13,7 @@ import {
   REFRESH_TOKEN_EXPIRATION,
 } from '../utils/env';
 
-const yearInMs: number = 31536000000;
+import { DAY_IN_MS, YEAR_IN_MS } from './constants';
 
 export interface PayloadInterface {
   _id: string;
@@ -85,13 +87,13 @@ export const generateTokens = async (
       });
     } else {
       refreshToken = jwt.sign({ _id, remember }, REFRESH_TOKEN_SECRET, {
-        expiresIn: yearInMs,
+        expiresIn: YEAR_IN_MS,
       });
       await Token.create({
         userId: _id,
         refreshToken,
         createdAt: Date.now(),
-        expiresAt: Date.now() + yearInMs,
+        expiresAt: Date.now() + YEAR_IN_MS,
       });
     }
     return { accessToken, refreshToken, remember };
@@ -113,7 +115,7 @@ export const sendTokens = (res: Response, tokens: TokenResponseInterface) => {
     res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, {
       signed: true,
       httpOnly: true,
-      maxAge: yearInMs,
+      maxAge: YEAR_IN_MS,
       secure: NODE_ENV === 'production' ? true : false,
     });
   } else {
@@ -125,4 +127,19 @@ export const sendTokens = (res: Response, tokens: TokenResponseInterface) => {
     });
   }
   res.sendStatus(201);
+};
+
+const removeExpiredTokens = async () => {
+  await Token.deleteMany({ expiresAt: { $lt: Date.now() } });
+};
+
+export const expiredTokensCleaner = async () => {
+  try {
+    await removeExpiredTokens();
+    setInterval(async () => {
+      await removeExpiredTokens();
+    }, DAY_IN_MS);
+  } catch (err) {
+    console.error('Failed to remove expired tokens:', err);
+  }
 };

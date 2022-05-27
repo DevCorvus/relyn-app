@@ -1,10 +1,10 @@
-import type { Response, Request, NextFunction } from 'express';
+import { Response, Request, NextFunction } from 'express';
 
-const CsrfProtection = async (
+export async function csrfProtection(
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) {
   if (!req.session) return res.sendStatus(500);
   const csrfTokenFromClient = req.headers['csrf-token'];
   const csrfTokenFromServer = req.session.csrfToken;
@@ -12,6 +12,4 @@ const CsrfProtection = async (
   if (!(csrfTokenFromClient === csrfTokenFromServer))
     return res.status(403).send('Invalid CSRF-TOKEN');
   next();
-};
-
-export default CsrfProtection;
+}

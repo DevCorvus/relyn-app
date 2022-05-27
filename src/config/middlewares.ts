@@ -3,12 +3,13 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 
+import { redirectOverHttps } from '../middlewares/redirectOverHttps.middleware';
+
 import {
   NODE_ENV,
   SESSION_COOKIES_SECRET,
   SIGNED_COOKIES_SECRET,
 } from '../utils/env';
-import { redirectOverHttps } from '../middlewares/redirectOverHttps';
 
 export async function registerMiddlewares(app: Application) {
   app.use(

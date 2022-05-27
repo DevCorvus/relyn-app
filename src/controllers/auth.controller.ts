@@ -1,6 +1,9 @@
-import type { Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
+import { Request, Response } from 'express';
 import { randomBytes } from 'crypto';
+import { verify } from 'jsonwebtoken';
+
+import Token from '../models/Token';
+
 import {
   generateTokens,
   deleteRefreshToken,
@@ -9,7 +12,6 @@ import {
   PayloadInterface,
   TokenResponseInterface,
 } from '../utils/token';
-import Token from '../models/Token';
 import {
   NODE_ENV,
   REFRESH_TOKEN_SECRET,
@@ -17,7 +19,7 @@ import {
   ACCESS_TOKEN_COOKIE,
 } from '../utils/env';
 
-const refreshToken = async (req: Request, res: Response) => {
+export const refreshToken = async (req: Request, res: Response) => {
   const token = req.signedCookies[REFRESH_TOKEN_COOKIE];
   if (!token) return res.sendStatus(401);
 
@@ -43,7 +45,7 @@ const refreshToken = async (req: Request, res: Response) => {
   }
 };
 
-const csrfToken = async (req: Request, res: Response) => {
+export const csrfToken = async (req: Request, res: Response) => {
   if (!req.session) return res.sendStatus(500);
 
   if (!req.session.csrfToken)
@@ -53,9 +55,4 @@ const csrfToken = async (req: Request, res: Response) => {
     secure: NODE_ENV === 'production' ? true : false,
   });
   res.sendStatus(200);
-};
-
-export default {
-  refreshToken,
-  csrfToken,
 };

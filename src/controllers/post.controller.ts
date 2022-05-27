@@ -1,16 +1,18 @@
-import type { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import val from 'validator';
+
 import Comment from '../models/Comment';
 import Post, { PostInterface } from '../models/Post';
+
 import { paginate, SortByType } from '../utils/pagination';
-import { getUserUsername } from '../utils/database';
+import { getUserUsername } from '../utils/user';
 
 interface PostDataInterface {
   body: string;
   imageUrl: string;
 }
 
-const index = async (req: Request, res: Response) => {
+export const index = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string);
   const username = req.query.username as string;
   const search = req.query.search as string;
@@ -28,7 +30,7 @@ const index = async (req: Request, res: Response) => {
   res.status(200).json(posts);
 };
 
-const show = async (req: Request, res: Response) => {
+export const show = async (req: Request, res: Response) => {
   const postId = req.params.id;
   try {
     const post = await Post.findById(postId);
@@ -40,7 +42,7 @@ const show = async (req: Request, res: Response) => {
   }
 };
 
-const store = async (req: Request, res: Response) => {
+export const store = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const { body, imageUrl: imageUrlFromClient } = req.body as PostDataInterface;
 
@@ -78,7 +80,7 @@ const store = async (req: Request, res: Response) => {
   }
 };
 
-const update = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   const postId = req.params.id;
   const userId = res.locals.userId;
   const { body, imageUrl: imageUrlFromClient } = req.body as PostInterface;
@@ -118,7 +120,7 @@ const update = async (req: Request, res: Response) => {
   res.status(404).send('Post not found.');
 };
 
-const destroy = async (req: Request, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   const postId = req.params.id;
   const userId = res.locals.userId;
   const post = await Post.findById(postId);
@@ -138,7 +140,7 @@ const destroy = async (req: Request, res: Response) => {
   res.status(404).send('Post not found');
 };
 
-const like = async (req: Request, res: Response) => {
+export const like = async (req: Request, res: Response) => {
   const userId = res.locals.userId;
   const postId = req.params.id;
 
@@ -167,13 +169,4 @@ const like = async (req: Request, res: Response) => {
   } catch (e) {
     res.sendStatus(500);
   }
-};
-
-export default {
-  index,
-  show,
-  store,
-  update,
-  destroy,
-  like,
 };

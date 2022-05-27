@@ -2,7 +2,7 @@ import { Router, Response, Request } from 'express';
 import { join as pathJoin } from 'path';
 import { NODE_ENV } from '../utils/env';
 
-const router: Router = Router();
+const router = Router();
 
 router.get('/api', (req: Request, res: Response) => res.sendStatus(200));
 
@@ -13,4 +13,4 @@ router.get('*', (req: Request, res: Response) => {
   });
 });
 
-export default router;
+export const indexRoutes = router;

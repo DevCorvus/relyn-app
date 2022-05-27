@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { resetPosts } from '../redux/postsSlice';
+import { resetPosts } from '../redux/postSlice';
 
 const useResetPosts = () => {
   const dispatch = useDispatch();
