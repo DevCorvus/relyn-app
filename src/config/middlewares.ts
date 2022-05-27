@@ -16,6 +16,7 @@ export async function registerMiddlewares(app: Application) {
 
   app.use(
     helmet({
+      crossOriginEmbedderPolicy: false,
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
