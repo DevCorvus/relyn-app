@@ -2,7 +2,7 @@
   "private": true,
   "name": "relyn-server",
   "version": "1.0.0",
-  "description": "Relyn App project (experimental)",
+  "description": "A post-based application project developed in Express.js (TypeScript) with MongoDB (Mongoose) and React.js with TailwindCSS.",
   "author": {
     "name": "Luis Portillo",
     "email": "devcorvus.contact@gmail.com",

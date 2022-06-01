@@ -2,7 +2,6 @@
   "private": true,
   "name": "relyn-client",
   "version": "1.0.0",
-  "description": "Client for Relyn App project (experimental)",
   "author": {
     "name": "Luis Portillo",
     "email": "devcorvus.contact@gmail.com",
@@ -10,6 +9,13 @@
   },
   "license": "GPL-3.0",
   "main": "src/index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development craco start",
+    "build": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false craco build",
+    "prod": "serve -s build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@dicebear/avatars": "^4.9.0",
@@ -21,6 +27,7 @@
     "@testing-library/user-event": "^12.8.3",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.3",
+    "cross-env": "^7.0.3",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.1",
     "postcss": "^7.0.36",
@@ -34,13 +41,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9",
     "validator": "^13.6.0",
     "web-vitals": "^1.1.2"
-  },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "prod": "serve -s build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

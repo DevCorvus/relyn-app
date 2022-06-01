@@ -4,7 +4,7 @@
 
 <h1 align="center">Relyn App</h1>
 
-A post-based application project developed in Express.js (TypeScript) and React.js
+A post-based application project developed in Express.js (TypeScript) with MongoDB (Mongoose) and React.js with TailwindCSS.
 
 **Check it out: https://relyn.herokuapp.com**
 
