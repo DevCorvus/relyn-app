@@ -6,8 +6,6 @@
 
 A post-based application project developed in Express.js (TypeScript) with MongoDB (Mongoose) and React.js with TailwindCSS.
 
-**Check it out: https://relyn.herokuapp.com**
-
 The README ends here because I'm too lazy to explain something I already did a long time ago, you're alone in that jungle of code. Thank you for reading! ❤️
 
 ## Context
@@ -24,7 +22,7 @@ This is how I took on the task of making the code slightly more presentable with
 
 The end result is a mix of old spaghetti code and new spaghetti code, but overall a bit more presentable. Of course there are still a lot of shortcomings and problems but I want to keep relatively intact the essence of a project that I did without much idea, but with which I am quite happy.
 
-You can check, if you are interested, the About page of the demo I wrote back then, where you will find a lot more details that I should have explained here: https://relyn.herokuapp.com/about
+You can check, if you are interested, the About page of the demo I wrote back then, where you will find a lot more details that I should have explained here.
 
 Now yes, thanks for reading! ❤️
 
